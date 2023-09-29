@@ -41,7 +41,7 @@ import streamlit as st
 
 os.environ['username'] = 'itsmethefounder@outlook.com'
 os.environ['password'] = "Tech4Life!"
-os.environ['ANTHROPIC_API_KEY'] = "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"
+os.environ['ANTHROPIC_API_KEY'] = "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"
 os.environ['LANGCHAIN_API_KEY'] = "ls__0aa97ffdedf342068430ab83273564fd"
 
 
