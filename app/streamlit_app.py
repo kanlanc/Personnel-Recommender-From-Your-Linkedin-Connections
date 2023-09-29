@@ -43,7 +43,7 @@ with col2:
         df = pd.read_csv(uploaded_file)
     else:
         # Load default CSV if no file is uploaded
-        df = pd.read_csv("enriched_linkedin_data_connections.csv")
+        df = pd.read_csv("app/enriched_linkedin_data_connections.csv")
 
 # Button
 run_button = st.button('Run')
