@@ -60,14 +60,13 @@ cohere_api_key = "5GIQYhLSWrnXOprlPqJSwKu6l7awxtBfi26R9c7c"
 
 
 def main_function(user_connections_list, user_query):
-    co = cohere.Client(cohere_api_key)
+ 
     claude = ChatAnthropic(temperature=0)
-    cohere = ChatAnthropic(temperature=0)
-    gpt = ChatAnthropic(temperature=0)
+    
 
-    user_connections_list = pd.read_csv(
-        "enriched_data_linkedin_data_connections.csv")
-    user_query = "Give me people who worked in the XR industry"
+    user_connections_list = user_connections_list
+    if user_query==None:
+        user_query = "Give me people who worked in the XR industry"
 
     template = """Answer the question based on the context below. If the
     question cannot be answered using the information provided answer
@@ -76,7 +75,7 @@ def main_function(user_connections_list, user_query):
     Context: You are a personnel recommending agent. Given the user required personnel, find the top 4 people with relevant experience
     and background that fit the user's needs in a table format with also a score on the right on how much they match.
 
-    You will do this analysis from the user's list available below
+    You will do this analysis from the user's list available below where the last column contains all the user's experiences and about section
 
     User List: {user_connections_list}
 

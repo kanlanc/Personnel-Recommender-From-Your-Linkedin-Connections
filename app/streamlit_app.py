@@ -43,9 +43,20 @@ with col2:
         df = pd.read_csv(uploaded_file)
     else:
         # Load default CSV if no file is uploaded
-        df = pd.read_csv('./enriched_data_linkedin_data_connections.csv')
+        df = pd.read_csv("enriched_linkedin_data_connections.csv")
 
-result = main_function(user_query=user_query, csv_file=uploaded_file)
+# Button
+run_button = st.button('Run')
 
-if result:
-    st.write(result)
+    # Run main function when button is clicked
+if run_button:
+    with st.spinner("Processing..."):
+    # You can call your processing function here.
+    # For demonstration, I'm just displaying the query and the dataframe.
+        if user_query:
+            st.write(f'You entered: {user_query}')
+            st.write(df)
+            result = main_function(user_query=user_query, user_connections_list=df)
+
+    if result:
+        st.write(result)
