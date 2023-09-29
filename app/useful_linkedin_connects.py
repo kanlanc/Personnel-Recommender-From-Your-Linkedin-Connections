@@ -41,13 +41,11 @@ import streamlit as st
 
 os.environ['username'] = 'itsmethefounder@outlook.com'
 os.environ['password'] = "Tech4Life!"
-os.environ['ANTHROPIC_API_KEY'] = "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"
+os.environ['ANTHROPIC_API_KEY'] = "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"
 os.environ['LANGCHAIN_API_KEY'] = "ls__0aa97ffdedf342068430ab83273564fd"
 
 
-openai_api_key = ""
-ANTHROPIC_API_KEY = ""
-SERPAPI_API_KEY = ""
+
 
 
 LANGCHAIN_API_KEY = "ls__0aa97ffdedf342068430ab83273564fd"
@@ -62,35 +60,36 @@ cohere_api_key = "5GIQYhLSWrnXOprlPqJSwKu6l7awxtBfi26R9c7c"
 def main_function(user_connections_list, user_query):
  
     claude = ChatAnthropic(temperature=0)
-    
+   
+    user_linkedin_content = user_connections_list["linkedinhtml"]
+    user_connections_list_string = user_connections_list.to_string()
 
-    user_connections_list = user_connections_list
     if user_query==None:
         user_query = "Give me people who worked in the XR industry"
 
-    template = """Answer the question based on the context below. If the
-    question cannot be answered using the information provided answer
-    with "I don't know".
+    template = """
 
     Context: You are a personnel recommending agent. Given the user required personnel, find the top 4 people with relevant experience
     and background that fit the user's needs in a table format with also a score on the right on how much they match.
 
-    You will do this analysis from the user's list available below where the last column contains all the user's experiences and about section
-
+    You will do this analysis from the user's list available below where the list contains all the user's experiences and about section
+    You do not need more information, and make judgements solely from the list info below while using the first and last names from the User List below
     User List: {user_connections_list}
+
+    User Linkedin: {user_linkedin_content}
 
     User Query : {user_query}
 
     Answer: """
 
     prompt_template = PromptTemplate(
-        input_variables=["user_connections_list", "user_query"],
+        input_variables=["user_connections_list", "user_query","user_linkedin_content"],
         template=template
     )
 
     claude_chain = LLMChain(prompt=prompt_template, llm=claude)
 
     claude_output = claude_chain.run(
-        user_connections_list=user_connections_list, user_query=user_query)
+        user_connections_list=user_connections_list_string, user_query=user_query,user_linkedin_content=user_linkedin_content)
 
     return claude_output

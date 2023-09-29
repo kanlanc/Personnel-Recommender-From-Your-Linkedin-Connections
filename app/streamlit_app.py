@@ -37,14 +37,18 @@ with col1:
 # CSV File Upload
 with col2:
     st.header("Upload a CSV file")
+    
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+    st.write("If no file is available, we have a default file configured, so just click run")
 
     if uploaded_file:
         df = pd.read_csv(uploaded_file)
+        df.drop(columns=['Unnamed: 0'])
+
     else:
         # Load default CSV if no file is uploaded
         df = pd.read_csv("app/enriched_linkedin_data_connections.csv")
-
+        df.drop(columns=['Unnamed: 0'])
 # Button
 run_button = st.button('Run')
 
