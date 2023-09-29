@@ -1,0 +1,1 @@
+Claude can't read dataframes directly but somehow can read them when you convert it into a string
