@@ -16,7 +16,7 @@ import pandas as pd
 
 
 from langchain.chat_models import ChatAnthropic
-# from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.chains import ConversationChain
 from langchain.agents import Tool
 from langchain.agents import AgentType
@@ -42,16 +42,18 @@ import streamlit as st
 os.environ['username'] = 'itsmethefounder@outlook.com'
 os.environ['password'] = "Tech4Life!"
 os.environ['ANTHROPIC_API_KEY'] = "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"
+os.environ['OPENAI_API_KEY'] = "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"
 os.environ['LANGCHAIN_API_KEY'] = "ls__0aa97ffdedf342068430ab83273564fd"
 
 
 
 
 
-LANGCHAIN_API_KEY = "ls__0aa97ffdedf342068430ab83273564fd"
+LANGCHAIN_API_KEY = "ls__3686dbb5e6f6418e8e75ec2585781033"
 LANGCHAIN_TRACING_V2 = True
 LANGCHAIN_ENDPOINT = "https://api.smith.langchain.com"
-LANGCHAIN_PROJECT = "Foodsmith"
+LANGCHAIN_PROJECT="MineNetwork"
+
 
 
 cohere_api_key = "5GIQYhLSWrnXOprlPqJSwKu6l7awxtBfi26R9c7c"
@@ -59,7 +61,8 @@ cohere_api_key = "5GIQYhLSWrnXOprlPqJSwKu6l7awxtBfi26R9c7c"
 
 def main_function(user_connections_list, user_query):
  
-    claude = ChatAnthropic(temperature=0)
+    # claude = ChatAnthropic(temperature=0)
+    openai = ChatOpenAI(model_name="gpt-4", temperature=0)
    
     user_linkedin_content = user_connections_list["linkedinhtml"]
     user_connections_list_string = user_connections_list.to_string()
@@ -87,9 +90,15 @@ def main_function(user_connections_list, user_query):
         template=template
     )
 
-    claude_chain = LLMChain(prompt=prompt_template, llm=claude)
+    # claude_chain = LLMChain(prompt=prompt_template, llm=claude)
+    gpt4_chain  = LLMChain(prompt = prompt_template, llm = openai)
 
-    claude_output = claude_chain.run(
+    # claude_output = claude_chain.run(
+    #     user_connections_list=user_connections_list_string, user_query=user_query,user_linkedin_content=user_linkedin_content)
+    gpt4_output = gpt4_chain.run(
         user_connections_list=user_connections_list_string, user_query=user_query,user_linkedin_content=user_linkedin_content)
 
-    return claude_output
+    # return claude_output
+    return gpt4_output
+
+
